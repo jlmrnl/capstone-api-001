@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
 const cors = require('cors')
+const Senior =require('./routes/SeniorFormsRoutes')
 
 const app = express()
 
@@ -10,6 +11,8 @@ require("dotenv").config();
 
 app.use(cors())
 app.use(bodyParser.json())
+
+app.use('/api/senior', Senior)
 
 mongoose
   .connect(process.env.MONGODB_URI, {
