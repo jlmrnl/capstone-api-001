@@ -45,14 +45,16 @@ const SeniorFormsModelSchema = new mongoose.Schema({
   },
   civilStatus: {
     type: String,
-    enum: ['single', 'married', 'Other']
+    enum: ['single', 'married', 'Other'],
+    required: true
   },
   nationality: {
     type: String,
     enum: ['Filipino', 'Other']
   },
   dateOfBirth: {
-    type: String // Assuming you want to store it as a string in the format DD/MM.YYYY
+    type: String,
+    required: true
   },
   placeOfBirth: {
     type: String,
@@ -63,7 +65,7 @@ const SeniorFormsModelSchema = new mongoose.Schema({
     required: true
   },
   picture: {
-    type: Buffer // Assuming you want to store the image as a buffer
+    type: Buffer
   },
   contactPerson: {
     type: Number,

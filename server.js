@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
 const cors = require('cors')
-const Senior =require('./routes/SeniorFormsRoutes')
+const Senior = require('./routes/SeniorFormsRoutes')
+const FourPs = require('./routes/4PsFormsRoutes');
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.use('/api/senior', Senior)
+app.use('/api/4ps', FourPs);
 
 mongoose
   .connect(process.env.MONGODB_URI, {
