@@ -65,7 +65,7 @@ const SeniorFormsModelSchema = new mongoose.Schema({
     required: true
   },
   picture: {
-    type: Buffer
+    type: String // Store the file path instead of using Buffer
   },
   contactPerson: {
     type: Number,

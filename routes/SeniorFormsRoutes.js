@@ -1,10 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const path = require('path');
+const fs = require('fs').promises;
 const SeniorFormsModels = require('../models/SerniorFormsModels');
 
 // Multer configuration
-const storage = multer.memoryStorage(); // Use memory storage for storing images as buffers
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const uploadPath = 'uploads/'; // Specify the directory to store the files
+    fs.mkdir(uploadPath, { recursive: true }).then(() => {
+      cb(null, uploadPath);
+    });
+  },
+  filename: function (req, file, cb) {
+    const fileName = `${Date.now()}_${file.originalname}`;
+    cb(null, fileName);
+  }
+});
+
 const upload = multer({ storage: storage });
 
 // Create a new form entry with image upload
@@ -12,8 +26,8 @@ router.post('/submit', upload.single('picture'), async (req, res) => {
   try {
     const formData = req.body;
     if (req.file) {
-      // If an image is uploaded, store it as a buffer
-      formData.picture = req.file.buffer;
+      // If an image is uploaded, store the file path
+      formData.picture = path.join('uploads', req.file.filename);
     }
 
     const newFormEntry = await SeniorFormsModels.create(formData);
